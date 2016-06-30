@@ -1,13 +1,13 @@
 import connectModules from './connectModules';
 
-export const createSelectorOrDefault = ({ name, selector }) => {
+const createSelectorOrDefault = ({ name, selector }) => {
   if (typeof selector === 'function') {
     return selector;
   }
   return state => state[name];
 };
 
-export const createModuleSelector = modules => {
+const createModuleSelector = modules => {
   if (modules.length === 1) {
     return createSelectorOrDefault(modules[0]);
   }
@@ -38,7 +38,7 @@ export const connectModule = (selector, modules) => {
     formattedSelector = selector;
     formattedModules = Array.isArray(modules) ? modules : [modules];
   }
-  return connectModules(formattedSelector, formattedModules);
+  return Component => connectModules(formattedSelector, formattedModules, Component);
 };
 
 export default connectModule;
